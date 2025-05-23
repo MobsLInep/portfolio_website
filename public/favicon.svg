@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes glow {
+      0% { filter: drop-shadow(0 0 2px #00ffff) drop-shadow(0 0 4px #00ffff); }
+      50% { filter: drop-shadow(0 0 4px #00ffff) drop-shadow(0 0 8px #00ffff); }
+      100% { filter: drop-shadow(0 0 2px #00ffff) drop-shadow(0 0 4px #00ffff); }
+    }
+    .neon-text {
+      animation: glow 2s ease-in-out infinite;
+    }
+  </style>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="JetBrains Mono" font-size="20" fill="#00ffff" class="neon-text">&lt;&gt;</text>
+</svg> 
