@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-background text-white font-mono antialiased overflow-x-hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background-light;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-full;
+}
+
+.text-glow {
+  text-shadow: 0 0 10px currentColor;
+}
+
+.neon-border {
+  @apply border border-primary;
+  box-shadow: 0 0 10px theme('colors.primary.DEFAULT'),
+              0 0 5px theme('colors.primary.DEFAULT') inset;
+}
+
+.accent-border {
+  @apply border border-accent;
+  box-shadow: 0 0 10px theme('colors.accent.DEFAULT'),
+              0 0 5px theme('colors.accent.DEFAULT') inset;
+}
+
+.success-border {
+  @apply border border-success;
+  box-shadow: 0 0 10px theme('colors.success.DEFAULT'),
+              0 0 5px theme('colors.success.DEFAULT') inset;
+}
+
+@layer components {
+  .section-container {
+    @apply px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 py-16 max-w-7xl mx-auto;
+  }
+  
+  .section-heading {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold mb-8 relative inline-block;
+  }
+  
+  .section-heading::after {
+    content: '';
+    @apply absolute left-0 -bottom-2 h-1 w-full bg-primary;
+    box-shadow: 0 0 10px theme('colors.primary.DEFAULT');
+  }
+  
+  .project-card {
+    @apply h-[520px] sm:h-[429px] md:h-[500px] relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+  
+  .project-card-inner {
+    @apply absolute w-full h-full transition-all duration-500;
+    transform-style: preserve-3d;
+  }
+  
+  .project-card-front,
+  .project-card-back {
+    @apply absolute w-full h-full overflow-hidden rounded-lg p-4 sm:p-6;
+    backface-visibility: hidden;
+  }
+  
+  .project-card-front {
+    @apply bg-background-light;
+  }
+  
+  .project-card-back {
+    @apply bg-background-light [transform:rotateY(180deg)] flex flex-col justify-between;
+  }
+  
+  .skill-item {
+    @apply relative p-4 rounded-lg bg-background-light overflow-hidden;
+  }
+  
+  .skill-progress {
+    @apply absolute bottom-0 left-0 h-1 bg-primary;
+    box-shadow: 0 0 10px theme('colors.primary.DEFAULT');
+  }
+}
