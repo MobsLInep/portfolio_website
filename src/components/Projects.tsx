@@ -160,9 +160,46 @@ const Projects: React.FC = () => {
 >Dynamic 3D visualization
 >Gesture-based interaction`
     },
+    {
+      id: 7,
+      title: "Mask-Guided Diffusion for Plant Disease Progression",
+      description: "Built a mask-guided diffusion model that synthesizes realistic plant-disease progression, achieving FID 43.2, LPIPS 0.14, and 94.7% lesion IoU for controllable lesion growth.",
+      imageUrl: "images/proj4.jpg",
+      tags: ["AI/ML", "Diffusion", "ML"],
+      githubUrl: "https://github.com/MobsLInep?tab=repositories",
+      codeSnippet: `>Mask-guided diffusion model
+>FID = 43.2
+>LPIPS = 0.14
+>Lesion IoU = 94.7%
+>Controllable disease progression`
+    },
+    {
+      id: 8,
+      title: "RL Agent for TrackMania Nations Forever",
+      description: "Trained a deep reinforcement learning agent to race in TrackMania Nations Forever using a custom Gymnasium environment, checkpoint-based reward shaping, and DQN.",
+      imageUrl: "images/proj6.jpg",
+      tags: ["AI/ML", "RL", "ML"],
+      githubUrl: "https://github.com/MobsLInep?tab=repositories",
+      codeSnippet: `>Custom Gymnasium environment
+>Checkpoint-based reward shaping
+>DQN training loop
+>Self-driving race agent`
+    },
+    {
+      id: 9,
+      title: "Lattice Gas Method Fluid Simulator",
+      description: "Implemented a cellular-automata fluid simulator using FHP/HPP lattice gas models, validating emergent dynamics against the Navier–Stokes equations.",
+      imageUrl: "images/proj2.jpg",
+      tags: ["Simulation", "Physics", "Cellular Automata"],
+      githubUrl: "https://github.com/MobsLInep?tab=repositories",
+      codeSnippet: `>Cellular automata fluid dynamics
+>FHP & HPP lattice gas models
+>Navier-Stokes validation
+>Emergent flow simulation`
+    },
   ];
 
-  const filters = ['all', 'React', 'ML', 'App Development', 'API'];
+  const filters = ['all', 'AI/ML', 'ML', 'App Development', 'API'];
 
   const filteredProjects = activeFilter === 'all'
     ? projects
@@ -177,18 +214,18 @@ const Projects: React.FC = () => {
           variants={containerVariants}
           className="text-center mb-12"
         >
-          <motion.h2 
+          <motion.h2
             variants={fadeInUp}
             className="section-heading text-primary"
           >
-            My Projects
+            Projects
           </motion.h2>
-          <motion.p 
+          <motion.p
             variants={fadeInUp}
             transition={{ delay: 0.1 }}
             className="max-w-2xl mx-auto text-gray-300 mt-4"
           >
-            Here are some of my recent projects that showcase my skills and interests in different technologies.
+            From diffusion models and RL agents to IoT systems and full-stack apps.
           </motion.p>
           
           <motion.div 

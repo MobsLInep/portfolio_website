@@ -18,10 +18,15 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+  // Flip on hover (mouse), focus-within (keyboard), or tap (touch).
+  const [flipped, setFlipped] = useState(false);
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
+  // Keep the card flipped while focus moves between the links on its back face;
+  // only flip back when focus leaves the card entirely.
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+      setFlipped(false);
+    }
   };
 
   return (
@@ -30,21 +35,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="project-card"
-      onMouseEnter={() => setIsFlipped(true)}
-      onMouseLeave={() => setIsFlipped(false)}
-      onClick={() => setIsFlipped(!isFlipped)}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+      onFocus={() => setFlipped(true)}
+      onBlur={handleBlur}
+      onClick={() => setFlipped((f) => !f)}
     >
       <motion.div
         className="project-card-inner"
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        animate={{ rotateY: flipped ? 180 : 0 }}
         transition={{ duration: 0.6 }}
       >
         {/* Front of card */}
         <div className="project-card-front">
           <div className="h-[40%] sm:h-1/2 rounded-t-lg overflow-hidden">
-            <img 
+            <img
               src={project.imageUrl}
               alt={project.title}
+              loading="lazy"
               className="w-full h-full object-cover"
             />
           </div>
@@ -55,7 +63,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex justify-between items-center">
             <div className="flex flex-wrap gap-1 sm:gap-2">
               {project.tags.map((tag, index) => (
-                <span 
+                <span
                   key={index}
                   className="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full bg-accent/20 text-accent"
                 >
@@ -78,22 +86,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             </pre>
           </div>
           <div className="flex justify-between mt-3 sm:mt-4">
-            <a 
+            <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-white hover:text-primary transition-colors text-xs sm:text-sm"
+              aria-label={`${project.title} source code on GitHub`}
+              className="flex items-center gap-1 text-white hover:text-primary transition-colors text-xs sm:text-sm rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background-light"
               onClick={(e) => e.stopPropagation()}
             >
               <Github size={14} className="sm:w-4 sm:h-4" />
               <span>Source</span>
             </a>
             {project.liveUrl && (
-              <a 
+              <a
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-white hover:text-primary transition-colors text-xs sm:text-sm"
+                aria-label={`${project.title} live demo`}
+                className="flex items-center gap-1 text-white hover:text-primary transition-colors text-xs sm:text-sm rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background-light"
                 onClick={(e) => e.stopPropagation()}
               >
                 <span>Live Demo</span>

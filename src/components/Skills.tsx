@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import AvatarCanvas from './three/Avatar';
+
+// Second WebGL scene — split out and only mounted while the Skills section is in view
+const AvatarCanvas = lazy(() => import('./three/Avatar'));
 
 interface Skill {
   name: string;
@@ -84,7 +86,15 @@ const Skills: React.FC = () => {
     { name: 'Git', level: 85, category: 'devops', icon: 'G' },
     { name: 'Pandas', level: 90, category: 'AI/ML', icon: 'PD' },
     { name: 'NumPy', level: 85, category: 'AI/ML', icon: 'NP' },
+    { name: 'Diffusion Models', level: 80, category: 'AI/ML', icon: 'DF' },
+    { name: 'Agentic AI', level: 85, category: 'AI/ML', icon: 'AG' },
+    { name: 'RAG', level: 85, category: 'AI/ML', icon: 'RAG' },
+    { name: 'LLM Fine-Tuning', level: 75, category: 'AI/ML', icon: 'LLM' },
+    { name: 'Reinforcement Learning', level: 80, category: 'AI/ML', icon: 'RL' },
     { name: 'Matplotlib/Seaborn', level: 80, category: 'data', icon: 'MPL' },
+    { name: 'FastAPI', level: 80, category: 'tools', icon: 'API' },
+    { name: 'Apache Superset', level: 75, category: 'tools', icon: 'SS' },
+    { name: 'Gymnasium', level: 80, category: 'frameworks', icon: 'GYM' },
   ];
 
   const categories = [...new Set(skills.map(skill => skill.category))];
@@ -99,19 +109,12 @@ const Skills: React.FC = () => {
           variants={containerVariants}
           className="text-center mb-12"
         >
-          <motion.h2 
+          <motion.h2
             variants={fadeInUp}
             className="section-heading text-primary"
           >
-            My Skills
+            Skills
           </motion.h2>
-          <motion.p 
-            variants={fadeInUp}
-            transition={{ delay: 0.1 }}
-            className="max-w-2xl mx-auto text-gray-300 mt-4"
-          >
-            These are some of the technologies and tools I've been working with recently.
-          </motion.p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -146,10 +149,10 @@ const Skills: React.FC = () => {
                         </div>
                         <div className="w-full h-2 bg-background rounded-full overflow-hidden">
                           <motion.div
-                            initial={{ width: 0 }}
-                            animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
+                            initial={{ scaleX: 0 }}
+                            animate={inView ? { scaleX: skill.level / 100 } : { scaleX: 0 }}
                             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                            className="h-full bg-primary rounded-full"
+                            className="h-full w-full origin-left bg-primary rounded-full"
                             style={{
                               boxShadow: "0 0 10px theme('colors.primary.DEFAULT')"
                             }}
@@ -173,8 +176,12 @@ const Skills: React.FC = () => {
             className="flex justify-center items-center"
             ref={cubeRef}
           >
-            <div className="w-full h-[800px] relative"> {/* Changed from h-[400px] to h-[800px] */}
-              <AvatarCanvas />
+            <div className="w-full h-[340px] sm:h-[460px] lg:h-[600px] relative">
+              {inView && (
+                <Suspense fallback={null}>
+                  <AvatarCanvas />
+                </Suspense>
+              )}
               <motion.div
                 variants={fadeInUp}
                 initial="hidden"

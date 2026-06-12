@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Code2, GraduationCap } from 'lucide-react';
+import { Code2, GraduationCap, Users } from 'lucide-react';
 
 const About: React.FC = () => {
   const [ref, inView] = useInView({
@@ -118,10 +118,47 @@ const About: React.FC = () => {
             </div>
           </motion.div>
         </motion.div>
+
+        <motion.div
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={containerVariants}
+          className="mt-12"
+        >
+          <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
+            <Users className="text-accent w-6 h-6" />
+            <h3 className="text-xl font-bold text-white">Extracurriculars</h3>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              {
+                role: 'Core Member',
+                org: 'Society of Coders, IIIT-NR',
+                year: '2025 – Present',
+              },
+              {
+                role: 'Junior Placement Coordinator',
+                org: 'Training and Placement Cell, IIIT-NR',
+                year: '2026 – Present',
+              },
+            ].map((item) => (
+              <motion.div
+                key={item.org}
+                variants={itemVariants}
+                className="bg-background-light rounded-lg p-4 border border-primary/30"
+              >
+                <h4 className="text-white font-bold">{item.role}</h4>
+                <p className="text-gray-400 text-sm mt-1">{item.org}</p>
+                <span className="text-sm text-primary bg-primary/10 px-2 py-1 rounded inline-block mt-2">
+                  {item.year}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
 export default About;
-//clerish, successfully accomplished

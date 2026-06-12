@@ -9,11 +9,11 @@ const Footer: React.FC = () => {
           <div className="md:order-2 flex flex-col items-end">
             <h4 className="text-white font-bold mb-4">Quick Links</h4>
             <nav className="flex flex-col space-y-2 items-end">
-              {['Home', 'About', 'Projects', 'Skills', 'Contact'].map((item) => (
-                <a 
+              {['Home', 'About', 'Experience', 'Projects', 'Publications', 'Patents', 'Skills', 'Contact'].map((item) => (
+                <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  className="text-gray-400 hover:text-primary transition-colors"
+                  className="inline-block py-1 text-gray-400 hover:text-primary transition-colors"
                 >
                   {item}
                 </a>

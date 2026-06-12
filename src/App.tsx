@@ -1,22 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
+import Experience from './components/Experience';
 import Projects from './components/Projects';
+import Publications from './components/Publications';
+import Patents from './components/Patents';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import BackgroundCanvas from './components/three/BackgroundCanvas';
+
+// Heavy WebGL scene (three.js) — split into its own chunk and loaded after first paint
+const BackgroundCanvas = lazy(() => import('./components/three/BackgroundCanvas'));
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading assets
+    // Brief branded intro — content underneath is already ready, so keep it short
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 800);
     
     return () => clearTimeout(timer);
   }, []);
@@ -31,13 +36,11 @@ function App() {
         >
           <div className="flex items-center justify-center">
             <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 180, 360],
-              }}
+              animate={{ rotate: 360 }}
               transition={{
-                duration: 2,
+                duration: 1.2,
                 repeat: Infinity,
+                ease: 'linear',
               }}
               className="w-16 h-16 border-4 border-t-primary border-r-accent border-b-success border-l-terminal-yellow rounded-full"
             />
@@ -60,13 +63,18 @@ function App() {
   return (
     <div className="relative">
       <div className="fixed inset-0 z-0">
-        <BackgroundCanvas />
+        <Suspense fallback={null}>
+          <BackgroundCanvas />
+        </Suspense>
       </div>
       <div className="relative z-10">
         <Header />
         <Hero />
         <About />
+        <Experience />
         <Projects />
+        <Publications />
+        <Patents />
         <Skills />
         <Contact />
         <Footer />

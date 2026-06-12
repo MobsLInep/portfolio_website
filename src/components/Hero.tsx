@@ -1,9 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { ChevronDown, Github, Linkedin, Mail } from 'lucide-react';
 
 const Hero: React.FC = () => {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center pt-16">
       <div className="section-container relative">
@@ -30,22 +32,28 @@ const Hero: React.FC = () => {
           </h1>
           
           <div className="text-xl md:text-2xl lg:text-3xl mb-8 h-12">
-            <TypeAnimation
-              sequence={[
-                '> Full Stack Developer',
-                2000,
-                '> App Developer',
-                2000,
-                '> AI/ML Engineer',
-                2000,
-                '> Data Science Enthusiast',
-                2000,
-              ]}
-              wrapper="div"
-              cursor={true}
-              repeat={Infinity}
-              className="text-terminal-green inline-block"
-            />
+            {reduceMotion ? (
+              <div className="text-terminal-green inline-block">
+                &gt; Full Stack Developer
+              </div>
+            ) : (
+              <TypeAnimation
+                sequence={[
+                  '> Full Stack Developer',
+                  2000,
+                  '> App Developer',
+                  2000,
+                  '> AI/ML Engineer',
+                  2000,
+                  '> Data Science Enthusiast',
+                  2000,
+                ]}
+                wrapper="div"
+                cursor={true}
+                repeat={Infinity}
+                className="text-terminal-green inline-block"
+              />
+            )}
           </div>
           
           <motion.div
@@ -67,7 +75,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 1 }}
-            className="flex justify-center space-x-6 mb-16"
+            className="flex justify-center space-x-3 mb-16"
           >
             {[
               { icon: <Github size={24} />, href: 'https://github.com/MobsLInep', label: 'GitHub' },
@@ -79,7 +87,7 @@ const Hero: React.FC = () => {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-primary transition-colors duration-300"
+                className="inline-flex items-center justify-center w-11 h-11 rounded-md text-white hover:text-primary transition-colors duration-300"
                 aria-label={social.label}
               >
                 {social.icon}
@@ -92,11 +100,21 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
-          <a href="#about" aria-label="Scroll down">
+          <motion.a
+            href="#about"
+            aria-label="Scroll down"
+            className="inline-flex items-center justify-center w-11 h-11"
+            animate={reduceMotion ? undefined : { y: [0, 8, 0] }}
+            transition={
+              reduceMotion
+                ? undefined
+                : { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }
+            }
+          >
             <ChevronDown className="w-8 h-8 text-primary" />
-          </a>
+          </motion.a>
         </motion.div>
       </div>
     </section>

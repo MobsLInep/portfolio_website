@@ -23,7 +23,10 @@ const Header: React.FC = () => {
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
+    { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Publications', href: '#publications' },
+    { name: 'Patents', href: '#patents' },
     { name: 'Skills', href: '#skills' },
     { name: 'Contact', href: '#contact' }
   ];
@@ -45,7 +48,7 @@ const Header: React.FC = () => {
           </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden lg:flex space-x-6">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -60,7 +63,7 @@ const Header: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white focus:outline-none"
+            className="lg:hidden text-white focus:outline-none"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -74,7 +77,7 @@ const Header: React.FC = () => {
         initial={false}
         animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
         transition={{ duration: 0.3 }}
-        className="md:hidden overflow-hidden bg-background/90 backdrop-blur-md"
+        className="lg:hidden overflow-hidden bg-background/90 backdrop-blur-md"
       >
         {isOpen && (
           <nav className="flex flex-col space-y-4 px-4 py-4">
